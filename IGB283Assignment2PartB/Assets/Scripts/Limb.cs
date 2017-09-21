@@ -4,13 +4,19 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Limb : MonoBehaviour {
+    //Importing IGB283Tranform
+    IGB283Transform meshTransform = new IGB283Transform();
 
-	public GameObject child;
-
+    //Arm Sliders
+    public GameObject child;
 	public GameObject control;
 
-	public Vector3 jointLocation;
+    //Settable Start Vector3
+    public Vector3 StartLocation;
+
+    public Vector3 jointLocation;
 	public Vector3 jointOffset;
+
 
 	public float angle;
 
@@ -18,13 +24,21 @@ public class Limb : MonoBehaviour {
 
 	public Vector3[] limbVertexLocations;
 
-
+    //Materials
+    public Material material;
+    //Public MeshRenderer meshRenderer;
     public Mesh mesh;
+
+    //Public Colour Setting
+    new Vector3 DrawColor;
+
 
     // This will run before Start
     void Awake () {
     	// Draw the limb 
     	DrawLimb();
+
+        
     }
 
 	// Use this for initialization
@@ -33,7 +47,7 @@ public class Limb : MonoBehaviour {
 		if (child != null) {
 			child.GetComponent<Limb>(). MoveByOffset(jointOffset);
 		}
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -59,13 +73,11 @@ public class Limb : MonoBehaviour {
         // Get the Mesh from the MeshFilter
         mesh = GetComponent<MeshFilter>().mesh;
 
-
-
-
         // Clear all vertex and index data from the mesh
         mesh.Clear();
-        
-        // Create a rectangle with points at (0, 0, 0), (0, 1, 0), (1, 1, 0) and (1, 0, 0)
+
+
+        // Create a rectangle with supplied vertices
         mesh.vertices = new Vector3[] {
             limbVertexLocations[0],
             limbVertexLocations[1],
@@ -74,11 +86,11 @@ public class Limb : MonoBehaviour {
         };
 
         // Set the colour of the rectangle
-        mesh.colors = new Color[] {
-            new Color(0.8f, 0.3f, 0.3f, 1.0f),
-            new Color(0.8f, 0.3f, 0.3f, 1.0f),
-            new Color(0.8f, 0.3f, 0.3f, 1.0f),
-            new Color(0.8f, 0.3f, 0.3f, 1.0f)
+        mesh.colors = new Color[] {            
+            new Color(1.0f, 1.0f, 1.0f, 1.0f),
+            new Color(1.0f, 1.0f, 1.0f, 1.0f),
+            new Color(1.0f, 1.0f, 1.0f, 1.0f),
+            new Color(1.0f, 1.0f, 1.0f, 1.0f)
         };
 
         // Set vertex indicies
