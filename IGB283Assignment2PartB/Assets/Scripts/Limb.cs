@@ -187,11 +187,9 @@ public class Limb : MonoBehaviour {
     //Rotates the head + and - set degrees
     private void HeadNod()
     {
-        //float nodAngle = Mathf.Sin(Time.time);
-        //RotateAroundPoint(jointLocation, nodAngle, lastAngle);
-        float nodRange = 0.10f;
+        float nodRange = 0.05f;
         float midAngle = 0.00f;
-        float nodSpeed = 10.00f;
+        float nodSpeed = 5.00f;
         float angle = midAngle + (Mathf.Sin(nodSpeed * Time.time) * nodRange);
 
         RotateAroundPoint(jointLocation, angle, lastAngle);
@@ -257,8 +255,9 @@ public class Limb : MonoBehaviour {
 			child.GetComponent<Limb>().MoveByOffset(jointOffset);
 		}
         //Set Starting angles
-        Rotate(startingAngle);
-        
+        child.GetComponent<Limb>().RotateAroundPoint(jointLocation, startingAngle, lastAngle);
+
+
 
     }
 	
@@ -271,7 +270,7 @@ public class Limb : MonoBehaviour {
 		}*/
 
 		if (child != null) {
-			child.GetComponent<Limb>().RotateAroundPoint( jointLocation, angle, lastAngle);
+			child.GetComponent<Limb>().RotateAroundPoint(jointLocation, angle, lastAngle);
 		}	
 
         if (isHead == true)
