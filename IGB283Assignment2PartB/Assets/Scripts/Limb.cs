@@ -31,9 +31,23 @@ public class Limb : MonoBehaviour {
     //Public MeshRenderer meshRenderer;
     public Mesh mesh;
 
+    //Public colour choice
+    public float[] spriteColor;
+
     //Public Colour Setting
     new Vector3 DrawColor;
 
+    //Is head Check
+    public bool isHead;
+
+    [Header("Jump Variables")]
+    public float jumpHeight = 0.5f;
+    public float jumpWidth = 1;
+    public float jumpSpeed = 5;
+    Vector2 startPos;
+    Vector2 endPos;
+    float startTime;
+    public bool isJumping;
 
     [Header("Jump Variables")]
     public float jumpHeight = 0.5f;
@@ -71,10 +85,10 @@ public class Limb : MonoBehaviour {
 
         // Set the colour of the rectangle
         mesh.colors = new Color[] {
-            new Color(1.0f, 1.0f, 1.0f, 1.0f),
-            new Color(1.0f, 1.0f, 1.0f, 1.0f),
-            new Color(1.0f, 1.0f, 1.0f, 1.0f),
-            new Color(1.0f, 1.0f, 1.0f, 1.0f)
+            new Color(spriteColor[0], spriteColor[1], spriteColor[2], spriteColor[3]),
+            new Color(spriteColor[0], spriteColor[1], spriteColor[2], spriteColor[3]),
+            new Color(spriteColor[0], spriteColor[1], spriteColor[2], spriteColor[3]),
+            new Color(spriteColor[0], spriteColor[1], spriteColor[2], spriteColor[3])
         };
 
         // Set vertex indicies
@@ -107,7 +121,7 @@ public class Limb : MonoBehaviour {
         }
 
     }
-
+    
     // Rotate the limb around a point
     public void RotateAroundPoint(Vector3 point, float angle, float lastAngle)
     {
@@ -135,6 +149,7 @@ public class Limb : MonoBehaviour {
         }
 
         mesh.vertices = vertices;
+
 
         // Apply the transformation to the joint
         jointLocation = M.MultiplyPoint(jointLocation);
@@ -178,7 +193,64 @@ public class Limb : MonoBehaviour {
         return matrix;
     }
 
-    //
+    //HeadNod
+    //Rotates the head + and - set degrees
+    private void HeadNod()
+    {
+        //float nodAngle = Mathf.Sin(Time.time);
+        //RotateAroundPoint(jointLocation, nodAngle, lastAngle);
+        float nodRange = 0.10f;
+        float midAngle = 0.00f;
+        float nodSpeed = 10.00f;
+        float angle = midAngle + (Mathf.Sin(nodSpeed * Time.time) * nodRange);
+
+        RotateAroundPoint(jointLocation, angle, lastAngle);
+        Debug.Log(angle);
+    }
+
+    //Sets jump targeting
+    void PrepareJump(bool right)
+    {
+        startPos = transform.position;
+        endPos = transform.position;
+
+        startTime = Time.time;
+
+        if (right)
+        {
+            endPos.x += jumpWidth;
+        }
+        else
+        {
+            endPos.x -= jumpWidth;
+        }
+        isJumping = true;
+    }
+
+    //Moves limb across the jump
+    void Jump()
+    {
+        float t = (Time.time - startTime) * jumpSpeed;
+        Vector2 pos;
+
+        pos.x = Mathf.Lerp(startPos.x, endPos.x, t);
+
+        if (t > 0.5f)
+        {
+            pos.y = Mathf.Lerp(jumpHeight, startPos.y, (t - 0.5f) * 2);
+        }
+        else
+        {
+            pos.y = Mathf.Lerp(startPos.y, jumpHeight, t * 2);
+        }
+
+        transform.position = pos;
+
+        if (t >= 1)
+        {
+            isJumping = false;
+        }
+    }
 
     // This will run before Start
     void Awake () {
@@ -192,7 +264,7 @@ public class Limb : MonoBehaviour {
 	void Start () {
 		// Move the child to the joint location
 		if (child != null) {
-			child.GetComponent<Limb>(). MoveByOffset(jointOffset);
+			child.GetComponent<Limb>().MoveByOffset(jointOffset);
 		}
 
         if (control != null) {
@@ -202,17 +274,49 @@ public class Limb : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+<<<<<<< HEAD
 		//lastAngle = angle;
+=======
+        /*
+		lastAngle = angle;
+>>>>>>> origin/master
 		if (control != null) {
 			angle = control.GetComponent<Slider>().value;
-		}
+		}*/
 
 		if (child != null) {
 			child.GetComponent<Limb>().RotateAroundPoint( jointLocation, angle, lastAngle);
 		}	
 
+<<<<<<< HEAD
 		// Recalculate the bounds of the mesh
 		mesh.RecalculateBounds();
+=======
+        if (isHead == true)
+        {
+            HeadNod();
+        }
+
+        if (isJumping)
+        {
+            Jump();
+        }
+        else
+        {
+            if (Input.GetKey(KeyCode.RightArrow))
+            {
+                PrepareJump(true);
+            }
+            else if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                PrepareJump(false);
+            }
+        }
+
+        // Recalculate the bounds of the mesh
+        mesh.RecalculateBounds();
+	}
+>>>>>>> origin/master
 
 
 
