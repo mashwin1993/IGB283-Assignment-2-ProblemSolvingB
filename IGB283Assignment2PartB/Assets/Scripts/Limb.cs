@@ -29,9 +29,14 @@ public class Limb : MonoBehaviour {
     //Public MeshRenderer meshRenderer;
     public Mesh mesh;
 
+    //Public colour choice
+    public float[] spriteColor;
+
     //Public Colour Setting
     new Vector3 DrawColor;
 
+    //Is head Check
+    public bool isHead;
 
     //Methods//
 
@@ -59,10 +64,10 @@ public class Limb : MonoBehaviour {
 
         // Set the colour of the rectangle
         mesh.colors = new Color[] {
-            new Color(1.0f, 1.0f, 1.0f, 1.0f),
-            new Color(1.0f, 1.0f, 1.0f, 1.0f),
-            new Color(1.0f, 1.0f, 1.0f, 1.0f),
-            new Color(1.0f, 1.0f, 1.0f, 1.0f)
+            new Color(spriteColor[0], spriteColor[1], spriteColor[2], spriteColor[3]),
+            new Color(spriteColor[0], spriteColor[1], spriteColor[2], spriteColor[3]),
+            new Color(spriteColor[0], spriteColor[1], spriteColor[2], spriteColor[3]),
+            new Color(spriteColor[0], spriteColor[1], spriteColor[2], spriteColor[3])
         };
 
         // Set vertex indicies
@@ -95,7 +100,7 @@ public class Limb : MonoBehaviour {
         }
 
     }
-
+    
     // Rotate the limb around a point
     public void RotateAroundPoint(Vector3 point, float angle, float lastAngle)
     {
