@@ -221,6 +221,7 @@ MonoBehaviour:
   - {x: -0.25, y: 2, z: 1}
   - {x: 0.25, y: 2, z: 1}
   - {x: 0.25, y: 0, z: 1}
+  startingAngle: 0
   material: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   mesh: {fileID: 0}
   spriteColor:
@@ -971,6 +972,7 @@ MonoBehaviour:
   - {x: -1, y: 0, z: 1}
   - {x: 1, y: 0, z: 1}
   - {x: 1, y: -1, z: -1}
+  startingAngle: 0
   material: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   mesh: {fileID: 0}
   spriteColor:
@@ -1141,6 +1143,7 @@ MonoBehaviour:
   - {x: -5, y: -1, z: 1}
   - {x: 5, y: -1, z: 1}
   - {x: 5, y: -2, z: -1}
+  startingAngle: 0
   material: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   mesh: {fileID: 0}
   spriteColor:
@@ -1376,6 +1379,7 @@ MonoBehaviour:
   - {x: -0.25, y: 2, z: 1}
   - {x: 0.25, y: 2, z: 1}
   - {x: 0.25, y: 0, z: 1}
+  startingAngle: 10
   material: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   mesh: {fileID: 0}
   spriteColor:
@@ -2063,6 +2067,7 @@ MonoBehaviour:
   - {x: -1, y: 1, z: 1}
   - {x: 1, y: 1, z: 1}
   - {x: 0.5, y: 0, z: 1}
+  startingAngle: 0
   material: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   mesh: {fileID: 0}
   spriteColor:

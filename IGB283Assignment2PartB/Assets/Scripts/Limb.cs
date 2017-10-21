@@ -24,6 +24,8 @@ public class Limb : MonoBehaviour {
 
 	public Vector3[] limbVertexLocations;
 
+    //Starting Angle Adjustment
+    public float startingAngle;
     //Materials
     public Material material;
     //Public MeshRenderer meshRenderer;
@@ -148,7 +150,7 @@ public class Limb : MonoBehaviour {
             child.GetComponent<Limb>().RotateAroundPoint(point, angle, lastAngle);
         }
 
-        lastAngle = angle;
+        //lastAngle = angle;
     }
 
     // Rotate a vertex around the origin
@@ -254,6 +256,10 @@ public class Limb : MonoBehaviour {
 		if (child != null) {
 			child.GetComponent<Limb>().MoveByOffset(jointOffset);
 		}
+        //Set Starting angles
+        Rotate(startingAngle);
+        
+
     }
 	
 	// Update is called once per frame
