@@ -90,6 +90,7 @@
     <Compile Include="Assets\Scripts\IGB283Transform.cs" />
     <Compile Include="Assets\Scripts\Limb.cs" />
     <Compile Include="Assets\Scripts\Matrix3x3.cs" />
+    <Compile Include="Assets\Scripts\Movement.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
