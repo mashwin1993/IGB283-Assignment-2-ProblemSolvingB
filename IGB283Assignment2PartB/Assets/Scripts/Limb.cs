@@ -45,7 +45,7 @@ public class Limb : MonoBehaviour {
     {
         // Add a MeshFilter and MeshRenderer to the Empty GameObject
         gameObject.AddComponent<MeshFilter>();
-        gameObject.AddComponent<MeshRenderer>();
+        gameObject.AddComponent<MeshRenderer>().material = material;
 
         // Get the Mesh from the MeshFilter
         mesh = GetComponent<MeshFilter>().mesh;

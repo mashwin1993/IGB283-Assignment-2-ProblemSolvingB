@@ -1136,9 +1136,9 @@ MonoBehaviour:
   material: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   mesh: {fileID: 0}
   spriteColor:
-  - 1
   - 0.5
-  - 1
+  - 0.5
+  - 0
   - 1
   isHead: 0
 --- !u!4 &910219812
@@ -1370,7 +1370,7 @@ MonoBehaviour:
   - 1
   - 1
   - 1
-  - 0
+  - 1
   isHead: 0
 --- !u!4 &1276527291
 Transform:
