@@ -48,6 +48,9 @@ public class Limb : MonoBehaviour {
     Vector2 endPos;
     float startTime;
     public bool isJumping;
+    public bool moveRight = true;
+    float minX = -4;
+    float maxX = 4;
 
     //Methods//
 
@@ -212,6 +215,12 @@ public class Limb : MonoBehaviour {
         {
             endPos.x -= jumpWidth;
         }
+
+        if (endPos.x < minX || endPos.x > maxX) {
+            moveRight = !moveRight;
+            return;
+        }
+
         isJumping = true;
     }
 
@@ -223,6 +232,7 @@ public class Limb : MonoBehaviour {
 
         pos.x = Mathf.Lerp(startPos.x, endPos.x, t);
 
+        /*
         if (t > 0.5f)
         {
             pos.y = Mathf.Lerp(jumpHeight, startPos.y, (t - 0.5f) * 2);
@@ -231,6 +241,9 @@ public class Limb : MonoBehaviour {
         {
             pos.y = Mathf.Lerp(startPos.y, jumpHeight, t * 2);
         }
+        //*/
+
+        pos.y = startPos.y + (Mathf.Sin(Mathf.Clamp(t, 0, 1) * Mathf.PI) * jumpHeight);
 
         transform.position = pos;
 
@@ -278,20 +291,19 @@ public class Limb : MonoBehaviour {
             HeadNod();
         }
 
+        if (Input.GetKey(KeyCode.RightArrow)) {
+            moveRight = true;
+        } else if (Input.GetKey(KeyCode.LeftArrow)) {
+            moveRight = false;
+        }
+
         if (isJumping)
         {
             Jump();
         }
         else
         {
-            if (Input.GetKey(KeyCode.RightArrow))
-            {
-                PrepareJump(true);
-            }
-            else if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                PrepareJump(false);
-            }
+            PrepareJump(moveRight);
         }
 
         // Recalculate the bounds of the mesh

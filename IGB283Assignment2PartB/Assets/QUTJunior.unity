@@ -230,10 +230,11 @@ MonoBehaviour:
   - 1
   - 1
   isHead: 0
-  jumpHeight: 1
-  jumpWidth: 2
-  jumpSpeed: 1
+  jumpHeight: 0.5
+  jumpWidth: 1
+  jumpSpeed: 5
   isJumping: 0
+  moveRight: 1
 --- !u!4 &83538472
 Transform:
   m_ObjectHideFlags: 0
@@ -981,10 +982,11 @@ MonoBehaviour:
   - 1
   - 1
   isHead: 0
-  jumpHeight: 1
-  jumpWidth: 2
-  jumpSpeed: 1
+  jumpHeight: 0.5
+  jumpWidth: 1
+  jumpSpeed: 5
   isJumping: 0
+  moveRight: 1
 --- !u!4 &875934793
 Transform:
   m_ObjectHideFlags: 0
@@ -1156,6 +1158,7 @@ MonoBehaviour:
   jumpWidth: 1
   jumpSpeed: 0
   isJumping: 0
+  moveRight: 1
 --- !u!4 &910219812
 Transform:
   m_ObjectHideFlags: 0
@@ -1388,10 +1391,11 @@ MonoBehaviour:
   - 1
   - 1
   isHead: 0
-  jumpHeight: 1
-  jumpWidth: 2
-  jumpSpeed: 1
+  jumpHeight: 0.5
+  jumpWidth: 1
+  jumpSpeed: 5
   isJumping: 0
+  moveRight: 1
 --- !u!4 &1276527291
 Transform:
   m_ObjectHideFlags: 0
@@ -2076,10 +2080,11 @@ MonoBehaviour:
   - 1
   - 1
   isHead: 1
-  jumpHeight: 1
-  jumpWidth: 2
-  jumpSpeed: 1
+  jumpHeight: 0.5
+  jumpWidth: 1
+  jumpSpeed: 5
   isJumping: 0
+  moveRight: 1
 --- !u!4 &2016061546
 Transform:
   m_ObjectHideFlags: 0
