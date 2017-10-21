@@ -223,6 +223,10 @@ MonoBehaviour:
   - {x: 0.25, y: 0, z: 1}
   material: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   mesh: {fileID: 0}
+  jumpHeight: 3
+  jumpWidth: 5
+  jumpSpeed: 2
+  isJumping: 0
 --- !u!4 &83538472
 Transform:
   m_ObjectHideFlags: 0
@@ -963,6 +967,10 @@ MonoBehaviour:
   - {x: 1, y: -1, z: -1}
   material: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   mesh: {fileID: 0}
+  jumpHeight: 3
+  jumpWidth: 5
+  jumpSpeed: 2
+  isJumping: 0
 --- !u!4 &875934793
 Transform:
   m_ObjectHideFlags: 0
@@ -1278,6 +1286,10 @@ MonoBehaviour:
   - {x: 0.25, y: 0, z: 1}
   material: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   mesh: {fileID: 0}
+  jumpHeight: 3
+  jumpWidth: 5
+  jumpSpeed: 2
+  isJumping: 0
 --- !u!4 &1276527291
 Transform:
   m_ObjectHideFlags: 0
@@ -1896,6 +1908,10 @@ MonoBehaviour:
   - {x: 4, y: 2, z: 2}
   material: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   mesh: {fileID: 0}
+  jumpHeight: 3
+  jumpWidth: 5
+  jumpSpeed: 2
+  isJumping: 0
 --- !u!4 &1833430124
 Transform:
   m_ObjectHideFlags: 0
@@ -2025,6 +2041,10 @@ MonoBehaviour:
   - {x: 0.5, y: 0, z: 1}
   material: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   mesh: {fileID: 0}
+  jumpHeight: 3
+  jumpWidth: 5
+  jumpSpeed: 2
+  isJumping: 0
 --- !u!4 &2016061546
 Transform:
   m_ObjectHideFlags: 0

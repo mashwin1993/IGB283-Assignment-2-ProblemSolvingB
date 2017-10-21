@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class Limb : MonoBehaviour {
+
+
     //Importing IGB283Tranform
     IGB283Transform meshTransform = new IGB283Transform();
 
@@ -33,6 +35,16 @@ public class Limb : MonoBehaviour {
     new Vector3 DrawColor;
 
 
+    [Header("Jump Variables")]
+    public float jumpHeight = 0.5f;
+    public float jumpWidth = 1;
+    public float jumpSpeed = 5;
+    Vector2 startPos;
+    Vector2 endPos;
+    float startTime;
+    public bool isJumping;
+    bool moveRight;
+
     //Methods//
 
     // Draw the limb 
@@ -40,7 +52,7 @@ public class Limb : MonoBehaviour {
     {
         // Add a MeshFilter and MeshRenderer to the Empty GameObject
         gameObject.AddComponent<MeshFilter>();
-        gameObject.AddComponent<MeshRenderer>();
+        gameObject.AddComponent<MeshRenderer>().material = material;
 
         // Get the Mesh from the MeshFilter
         mesh = GetComponent<MeshFilter>().mesh;
@@ -132,6 +144,8 @@ public class Limb : MonoBehaviour {
         {
             child.GetComponent<Limb>().RotateAroundPoint(point, angle, lastAngle);
         }
+
+        lastAngle = angle;
     }
 
     // Rotate a vertex around the origin
@@ -180,11 +194,15 @@ public class Limb : MonoBehaviour {
 		if (child != null) {
 			child.GetComponent<Limb>(). MoveByOffset(jointOffset);
 		}
+
+        if (control != null) {
+            lastAngle = control.GetComponent<Slider>().value;
+        }
     }
 	
 	// Update is called once per frame
 	void Update () {
-		lastAngle = angle;
+		//lastAngle = angle;
 		if (control != null) {
 			angle = control.GetComponent<Slider>().value;
 		}
@@ -195,6 +213,63 @@ public class Limb : MonoBehaviour {
 
 		// Recalculate the bounds of the mesh
 		mesh.RecalculateBounds();
-	}
 
+
+
+        if (isJumping) {
+            Jump();
+        } else {
+            PrepareJump(moveRight);
+        }
+
+        if (Input.GetKey(KeyCode.LeftArrow)) {
+            moveRight = false;
+        } else if (Input.GetKey(KeyCode.RightArrow)) {
+            moveRight = true;
+        }
+    }
+
+    //Sets jump targeting
+    void PrepareJump(bool right) {
+        startPos = transform.position;
+        endPos = transform.position;
+
+        startTime = Time.time;
+
+        if (right) {
+            endPos.x += jumpWidth;
+        } else {
+            endPos.x -= jumpWidth;
+        }
+        isJumping = true;
+    }
+
+    //Moves limb across the jump
+    void Jump() {
+        float t = (Time.time - startTime) * jumpSpeed;
+        Vector2 pos;
+
+        pos.x = Mathf.Lerp(startPos.x, endPos.x, t);
+
+        /*
+        if (t > 0.5f) {
+            pos.y = Mathf.Lerp(jumpHeight, startPos.y, (t - 0.5f) * 2);
+        } else {
+            pos.y = Mathf.Lerp(startPos.y, jumpHeight, t * 2);
+        }
+        //*/
+
+        pos.y = startPos.y + (Mathf.Sin(Mathf.Clamp(t, 0, 1) * Mathf.PI) * jumpHeight);
+
+        transform.position = pos;
+
+        if (t >= 1) {
+            isJumping = false;
+        }
+
+        float nodRange = 20;
+        float midAngle = 10;
+        float nodSpeed = 1;
+        float angle = midAngle + (Mathf.Sin(nodSpeed * Time.time) * nodRange);
+    }
 }
