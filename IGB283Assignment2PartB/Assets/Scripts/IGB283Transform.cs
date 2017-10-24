@@ -33,6 +33,11 @@ public class IGB283Transform : MonoBehaviour
         ApplyTransform(TranslationMatrix(direction));
     }
 
+    public void SetPosition(Vector2 location) {
+        Translate(-Origin);
+        Translate(location);
+    }
+
     //Rotate the mesh, default to origin rotate
     public void Rotate(float angle)
     {
@@ -180,5 +185,50 @@ public class IGB283Transform : MonoBehaviour
 
     public void ResetScale() {
         scale = Vector2.one;
+    }
+
+
+
+    //Imported tranform...
+    // Rotate the limb around a point
+    public void RotateAroundPoint(Vector3 point, float angle, float lastAngle) {
+        // Move the point to the origin
+        Matrix3x3 T1 = TranslationMatrix(-point);
+
+        // Undo the last rotation
+        Matrix3x3 R1 = RotationMatrix(-lastAngle);
+
+        // Move the point back to the oritinal position
+        Matrix3x3 T2 = TranslationMatrix(point);
+
+        // Perform the new rotation
+        Matrix3x3 R2 = RotationMatrix(angle);
+
+        // The final translation matrix
+        Matrix3x3 M = T2 * R2 * R1 * T1;
+
+        // Move the mesh
+        Vector3[] vertices = mesh.vertices;
+
+        for (int i = 0; i < vertices.Length; i++) {
+            vertices[i] = M.MultiplyPoint(vertices[i]);
+        }
+
+        mesh.vertices = vertices;
+    }
+
+    // Move the joint to its starting position
+    public void MoveByOffset(Vector3 offset) {
+        // Find the translation Matrix
+        Matrix3x3 T = TranslationMatrix(offset);
+
+        // Move the mesh
+        Vector3[] vertices = mesh.vertices;
+
+        for (int i = 0; i < vertices.Length; i++) {
+            vertices[i] = T.MultiplyPoint(vertices[i]);
+        }
+
+        mesh.vertices = vertices;
     }
 }
