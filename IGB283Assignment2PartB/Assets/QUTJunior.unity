@@ -648,7 +648,7 @@ MonoBehaviour:
   jumpVars: {x: 0, y: 1.8}
   jumpDuration: 2
   fallVars: {x: 0, y: 1.8}
-  fallDuration: 1
+  fallDuration: 0.5
   currentMovement: 0
   bobMedian: 0
   bobRange: 0
@@ -1379,7 +1379,7 @@ MonoBehaviour:
   jumpVars: {x: 0, y: 2}
   jumpDuration: 2
   fallVars: {x: 0, y: 2}
-  fallDuration: 1
+  fallDuration: 0.5
   currentMovement: 0
   bobMedian: 0
   bobRange: 0
@@ -1528,7 +1528,7 @@ MonoBehaviour:
   jumpVars: {x: 0, y: 3}
   jumpDuration: 2
   fallVars: {x: 0, y: 3}
-  fallDuration: 1
+  fallDuration: 0.5
   currentMovement: 0
   bobMedian: 0
   bobRange: 0
@@ -1838,7 +1838,7 @@ MonoBehaviour:
   jumpVars: {x: 0, y: 1.6}
   jumpDuration: 2
   fallVars: {x: 0, y: 1.6}
-  fallDuration: 1
+  fallDuration: 0.5
   currentMovement: 0
   bobMedian: 0
   bobRange: 0
