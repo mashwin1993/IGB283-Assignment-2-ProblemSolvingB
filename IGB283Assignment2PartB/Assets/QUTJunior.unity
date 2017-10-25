@@ -236,6 +236,7 @@ MonoBehaviour:
   t: 0
   movingRight: 1
   moving: 0
+  collapsing: 0
   stepVars: {x: 1, y: 0.5}
   stepDuration: 0.5
   leapVars: {x: 3, y: 1}
@@ -245,6 +246,12 @@ MonoBehaviour:
   fallVars: {x: 0, y: 5}
   fallDuration: 1
   currentMovement: 0
+  bobMedian: 10
+  bobRange: 10
+  collapseMedian: 20
+  collapseRange: 100
+  collapseDuration: 0
+  collapseOffset: 0
 --- !u!4 &83538472
 Transform:
   m_ObjectHideFlags: 0
@@ -998,6 +1005,7 @@ MonoBehaviour:
   t: 0
   movingRight: 1
   moving: 0
+  collapsing: 0
   stepVars: {x: 1, y: 0.5}
   stepDuration: 0.5
   leapVars: {x: 3, y: 1}
@@ -1007,6 +1015,12 @@ MonoBehaviour:
   fallVars: {x: 0, y: 5}
   fallDuration: 1
   currentMovement: 0
+  bobMedian: 0
+  bobRange: 0
+  collapseMedian: 0
+  collapseRange: 0
+  collapseDuration: 0.5
+  collapseOffset: 0.05
 --- !u!4 &875934793
 Transform:
   m_ObjectHideFlags: 0
@@ -1180,6 +1194,7 @@ MonoBehaviour:
   t: 0
   movingRight: 1
   moving: 0
+  collapsing: 0
   stepVars: {x: 1, y: 0.5}
   stepDuration: 0.5
   leapVars: {x: 3, y: 1}
@@ -1189,6 +1204,12 @@ MonoBehaviour:
   fallVars: {x: 0, y: 5}
   fallDuration: 1
   currentMovement: 0
+  bobMedian: 0
+  bobRange: 10
+  collapseMedian: 0
+  collapseRange: 0
+  collapseDuration: 0
+  collapseOffset: 0
 --- !u!4 &910219812
 Transform:
   m_ObjectHideFlags: 0
@@ -1427,6 +1448,7 @@ MonoBehaviour:
   t: 0
   movingRight: 1
   moving: 0
+  collapsing: 0
   stepVars: {x: 1, y: 0.5}
   stepDuration: 0.5
   leapVars: {x: 3, y: 1}
@@ -1436,6 +1458,12 @@ MonoBehaviour:
   fallVars: {x: 0, y: 5}
   fallDuration: 1
   currentMovement: 0
+  bobMedian: -30
+  bobRange: 15
+  collapseMedian: -30
+  collapseRange: -50
+  collapseDuration: 0
+  collapseOffset: 0
 --- !u!4 &1276527291
 Transform:
   m_ObjectHideFlags: 0
@@ -2117,7 +2145,7 @@ MonoBehaviour:
   isHead: 1
   isRoot: 0
   nodSpeed: 2
-  nodMedian: -60
+  nodMedian: -80
   nodRange: 20
   dynJumpVars: {x: 0, y: 0}
   startPos: {x: 0, y: 0}
@@ -2126,6 +2154,7 @@ MonoBehaviour:
   t: 0
   movingRight: 1
   moving: 0
+  collapsing: 0
   stepVars: {x: 1, y: 0.5}
   stepDuration: 0.5
   leapVars: {x: 3, y: 1}
@@ -2135,6 +2164,12 @@ MonoBehaviour:
   fallVars: {x: 0, y: 5}
   fallDuration: 1
   currentMovement: 0
+  bobMedian: 0
+  bobRange: 0
+  collapseMedian: -80
+  collapseRange: -100
+  collapseDuration: 0
+  collapseOffset: 0
 --- !u!4 &2016061546
 Transform:
   m_ObjectHideFlags: 0

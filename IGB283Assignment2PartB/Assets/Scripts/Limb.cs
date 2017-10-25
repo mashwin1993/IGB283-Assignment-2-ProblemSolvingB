@@ -1,7 +1,5 @@
-﻿ using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Limb : MonoBehaviour {
 
@@ -85,6 +83,7 @@ public class Limb : MonoBehaviour {
     //Movement locks
     public bool movingRight = true;
     public bool moving;
+    public bool collapsing;
 
     //Step variables
     [Header("Step variables")]
@@ -118,6 +117,18 @@ public class Limb : MonoBehaviour {
     float resetTimer;
     float resetLength = 0.5f;
 
+    //Limb bob variables
+    [Header("Limb bob variables")]
+    public float bobMedian;
+    public float bobRange = 10;
+
+    //Collapse variables
+    [Header("Collapse variables")]
+    public float collapseMedian;
+    public float collapseRange;
+    public float collapseDuration;
+    public float collapseOffset;
+
     //Methods//
 
     // Draw the limb 
@@ -140,16 +151,6 @@ public class Limb : MonoBehaviour {
         vertexList.AddRange(limbVertexLocations);
 
         mesh.vertices = vertexList.ToArray();
-
-        /*
-        // Create a rectangle with supplied vertices
-        mesh.vertices = new Vector3[] {
-            limbVertexLocations[0],
-            limbVertexLocations[1],
-            limbVertexLocations[2],
-            limbVertexLocations[3]
-        };
-        */
 
         List<Color> colourList = new List<Color>();
         for (int i = 0; i < mesh.vertices.Length; i++) {
@@ -183,7 +184,8 @@ public class Limb : MonoBehaviour {
             child.GetComponent<Limb>().RotateAroundPoint(point, angle, lastAngle);
         }
 
-        this.angle = angle;
+        this.angle += angle - lastAngle;
+
     }
 
 
@@ -208,6 +210,8 @@ public class Limb : MonoBehaviour {
 
         //meshTransform.SetPosition(newPos);
         MoveByOffset(newPos - pos);
+
+        UpdateBob(t);
 
         if (t >= 1) {
             moving = false;
@@ -270,6 +274,7 @@ public class Limb : MonoBehaviour {
 
     void DoFall() {
         SetupJump(fallVars, fallDuration * 2, 0.5f);
+        collapsing = true;
     }
 
     // This will run before Start
@@ -289,8 +294,6 @@ public class Limb : MonoBehaviour {
         //Set Starting angles
         if (child != null) {
             child.GetComponent<Limb>().RotateAroundPoint(jointVert, startingAngle, angle);
-            print("starting angle: " + startingAngle);
-            print("angle: " + angle);
         }
     }
 	
@@ -328,6 +331,12 @@ public class Limb : MonoBehaviour {
 
             if (moving) {
                 UpdateJump();
+            } else if (collapsing) {
+                if (t >= 1) {
+                    SetCollapse();
+                } else {
+                    UpdateCollapse(t);
+                }
             } else {
                 if (currentMovement == Movement.fall) {
                     DoFall();
@@ -345,4 +354,47 @@ public class Limb : MonoBehaviour {
         mesh.RecalculateBounds();
 	}
 
+    void SetCollapse() {
+        startTime = Time.time - (duration * collapseOffset);
+        duration = collapseDuration;
+        t = 0;
+
+        UpdateCollapse(t);
+    }
+
+    public void UpdateCollapse(float t) {
+        if (isRoot) {
+            t = (Time.time - startTime) / duration;
+            this.t = Mathf.Clamp(t, 0, 1);
+            t = this.t;
+
+            if (t >= 1) {
+                collapsing = false;
+            }
+        }
+
+        float collapseAngle = collapseMedian + (Mathf.Sin(t * Mathf.PI) * collapseRange);
+
+        RotateAroundPoint(pos, collapseAngle, angle);
+
+        if (child) {
+            child.GetComponent<Limb>().UpdateCollapse(t);
+        }
+
+
+    }
+
+    public void UpdateBob(float t) {
+        if (isHead) {
+            return;
+        }
+
+        float bobAngle = bobMedian + (Mathf.Sin(t * Mathf.PI) * bobRange);
+
+        RotateAroundPoint(pos, bobAngle, angle);
+
+        if (child) {
+            child.GetComponent<Limb>().UpdateBob(t);
+        }
+    }
 }
