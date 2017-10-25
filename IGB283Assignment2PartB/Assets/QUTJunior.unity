@@ -192,7 +192,7 @@ GameObject:
   - component: {fileID: 83538471}
   m_Layer: 0
   m_Name: Upper Arm
-  m_TagString: Upper Arm
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -210,33 +210,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   child: {fileID: 1276527289}
+  control: {fileID: 1096688247}
   StartLocation: {x: 0, y: 0, z: 0}
   jointLocation: {x: 0, y: 2, z: 1}
   jointOffset: {x: 0, y: 2, z: 1}
   angle: 0
-  lastAngle: 0
   limbVertexLocations:
   - {x: -0.25, y: 0, z: 1}
   - {x: -0.25, y: 2, z: 1}
   - {x: 0.25, y: 2, z: 1}
   - {x: 0.25, y: 0, z: 1}
-  startingAngle: -1
+  startingAngle: -30
   material: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   mesh: {fileID: 0}
-  spriteColor:
-  - 1
-  - 1
-  - 1
-  - 1
+  spriteColour: {r: 1, g: 1, b: 1, a: 1}
   isHead: 0
-  sleep: 0
-  isUpperArm: 1
-  isLowerArm: 0
-  jumpHeight: 0
-  jumpWidth: 1
-  jumpSpeed: 5
-  isJumping: 0
-  moveRight: 1
+  isRoot: 0
+  nodSpeed: 1
+  nodMedian: 35
+  nodRange: 10
+  dynJumpVars: {x: 0, y: 0}
+  startPos: {x: 0, y: 0}
+  startTime: 0
+  duration: 0
+  t: 0
+  movingRight: 1
+  moving: 0
+  stepVars: {x: 1, y: 0.5}
+  stepDuration: 0.5
+  leapVars: {x: 3, y: 1}
+  leapDuration: 1
+  jumpVars: {x: 0, y: 4}
+  jumpDuration: 2
+  fallVars: {x: 0, y: 5}
+  fallDuration: 1
+  currentMovement: 0
 --- !u!4 &83538472
 Transform:
   m_ObjectHideFlags: 0
@@ -361,7 +369,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -30, y: -40}
+  m_AnchoredPosition: {x: -30, y: 0}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &249463316
@@ -946,7 +954,7 @@ GameObject:
   - component: {fileID: 875934794}
   m_Layer: 0
   m_Name: Base
-  m_TagString: Base
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -964,33 +972,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   child: {fileID: 83538470}
+  control: {fileID: 1491266014}
   StartLocation: {x: 0, y: 0, z: 0}
   jointLocation: {x: 0, y: 0, z: 1}
   jointOffset: {x: 0, y: 0, z: 0}
   angle: 0
-  lastAngle: 0
   limbVertexLocations:
   - {x: -1, y: -1, z: 1}
   - {x: -1, y: 0, z: 1}
   - {x: 1, y: 0, z: 1}
-  - {x: 1, y: -1, z: 1}
-  startingAngle: 0.5
+  - {x: 1, y: -1, z: -1}
+  startingAngle: 20
   material: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   mesh: {fileID: 0}
-  spriteColor:
-  - 1
-  - 1
-  - 1
-  - 1
+  spriteColour: {r: 1, g: 1, b: 1, a: 1}
   isHead: 0
-  sleep: 0
-  isUpperArm: 1
-  isLowerArm: 0
-  jumpHeight: 0
-  jumpWidth: 1
-  jumpSpeed: 5
-  isJumping: 0
-  moveRight: 1
+  isRoot: 1
+  nodSpeed: 1
+  nodMedian: 35
+  nodRange: 10
+  dynJumpVars: {x: 0, y: 0}
+  startPos: {x: 0, y: 0}
+  startTime: 0
+  duration: 0
+  t: 0
+  movingRight: 1
+  moving: 0
+  stepVars: {x: 1, y: 0.5}
+  stepDuration: 0.5
+  leapVars: {x: 3, y: 1}
+  leapDuration: 1
+  jumpVars: {x: 0, y: 4}
+  jumpDuration: 2
+  fallVars: {x: 0, y: 5}
+  fallDuration: 1
+  currentMovement: 0
 --- !u!4 &875934793
 Transform:
   m_ObjectHideFlags: 0
@@ -1108,7 +1124,7 @@ GameObject:
   - component: {fileID: 910219810}
   m_Layer: 0
   m_Name: Ground
-  m_TagString: Ground
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1137,34 +1153,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d6f9b35ca5d18742956a7eb5d23d7a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  child: {fileID: 0}
+  child: {fileID: 83538470}
+  control: {fileID: 1491266014}
   StartLocation: {x: 0, y: 0, z: 0}
   jointLocation: {x: 0, y: 0, z: 1}
   jointOffset: {x: 0, y: 0, z: 0}
   angle: 0
-  lastAngle: 0
   limbVertexLocations:
-  - {x: 5, y: -1, z: 0}
-  - {x: 5, y: -2, z: 0}
-  - {x: -5, y: -2, z: 0}
-  - {x: -5, y: -1, z: 0}
+  - {x: -5, y: -2, z: 1}
+  - {x: -5, y: -1, z: 1}
+  - {x: 5, y: -1, z: 1}
+  - {x: 5, y: -2, z: -1}
   startingAngle: 0
   material: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   mesh: {fileID: 0}
-  spriteColor:
-  - 0.5
-  - 0.5
-  - 0
-  - 1
+  spriteColour: {r: 1, g: 1, b: 1, a: 1}
   isHead: 0
-  sleep: 1
-  isUpperArm: 0
-  isLowerArm: 0
-  jumpHeight: 0
-  jumpWidth: 0
-  jumpSpeed: 5
-  isJumping: 0
-  moveRight: 1
+  isRoot: 0
+  nodSpeed: 1
+  nodMedian: 35
+  nodRange: 10
+  dynJumpVars: {x: 0, y: 0}
+  startPos: {x: 0, y: 0}
+  startTime: 0
+  duration: 0
+  t: 0
+  movingRight: 1
+  moving: 0
+  stepVars: {x: 1, y: 0.5}
+  stepDuration: 0.5
+  leapVars: {x: 3, y: 1}
+  leapDuration: 1
+  jumpVars: {x: 0, y: 4}
+  jumpDuration: 2
+  fallVars: {x: 0, y: 5}
+  fallDuration: 1
+  currentMovement: 0
 --- !u!4 &910219812
 Transform:
   m_ObjectHideFlags: 0
@@ -1217,7 +1241,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -30, y: -20}
+  m_AnchoredPosition: {x: -30, y: 20}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1096688249
@@ -1359,7 +1383,7 @@ GameObject:
   - component: {fileID: 1276527290}
   m_Layer: 0
   m_Name: Lower Arm
-  m_TagString: Lower Arm
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1377,33 +1401,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   child: {fileID: 2016061544}
+  control: {fileID: 249463314}
   StartLocation: {x: 0, y: 0, z: 0}
   jointLocation: {x: 0, y: 2, z: 1}
-  jointOffset: {x: 1, y: 1.8, z: 1}
+  jointOffset: {x: 0, y: 2, z: 1}
   angle: 0
-  lastAngle: 0
   limbVertexLocations:
   - {x: -0.25, y: 0, z: 1}
   - {x: -0.25, y: 2, z: 1}
   - {x: 0.25, y: 2, z: 1}
   - {x: 0.25, y: 0, z: 1}
-  startingAngle: -1.2
+  startingAngle: -50
   material: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   mesh: {fileID: 0}
-  spriteColor:
-  - 1
-  - 1
-  - 1
-  - 1
+  spriteColour: {r: 1, g: 1, b: 1, a: 1}
   isHead: 0
-  sleep: 0
-  isUpperArm: 0
-  isLowerArm: 0
-  jumpHeight: 0
-  jumpWidth: 1
-  jumpSpeed: 5
-  isJumping: 0
-  moveRight: 1
+  isRoot: 0
+  nodSpeed: 1
+  nodMedian: 35
+  nodRange: 10
+  dynJumpVars: {x: 0, y: 0}
+  startPos: {x: 0, y: 0}
+  startTime: 0
+  duration: 0
+  t: 0
+  movingRight: 1
+  moving: 0
+  stepVars: {x: 1, y: 0.5}
+  stepDuration: 0.5
+  leapVars: {x: 3, y: 1}
+  leapDuration: 1
+  jumpVars: {x: 0, y: 4}
+  jumpDuration: 2
+  fallVars: {x: 0, y: 5}
+  fallDuration: 1
+  currentMovement: 0
 --- !u!4 &1276527291
 Transform:
   m_ObjectHideFlags: 0
@@ -1528,7 +1560,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -30, y: -40}
+  m_AnchoredPosition: {x: -30, y: 40}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1491266016
@@ -2050,7 +2082,7 @@ GameObject:
   - component: {fileID: 2016061545}
   m_Layer: 0
   m_Name: Head
-  m_TagString: Head
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2068,33 +2100,41 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   child: {fileID: 0}
+  control: {fileID: 0}
   StartLocation: {x: 0, y: 0, z: 0}
   jointLocation: {x: 0, y: 0, z: 1}
-  jointOffset: {x: 0, y: 0, z: 1}
+  jointOffset: {x: 0, y: 1, z: 1}
   angle: 0
-  lastAngle: 0
   limbVertexLocations:
   - {x: -0.5, y: 0, z: 1}
   - {x: -1, y: 1, z: 1}
   - {x: 1, y: 1, z: 1}
   - {x: 0.5, y: 0, z: 1}
-  startingAngle: 2
+  startingAngle: 0
   material: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   mesh: {fileID: 0}
-  spriteColor:
-  - 1
-  - 1
-  - 1
-  - 1
+  spriteColour: {r: 1, g: 1, b: 1, a: 1}
   isHead: 1
-  sleep: 0
-  isUpperArm: 0
-  isLowerArm: 0
-  jumpHeight: 0
-  jumpWidth: 1
-  jumpSpeed: 5
-  isJumping: 0
-  moveRight: 1
+  isRoot: 0
+  nodSpeed: 2
+  nodMedian: -60
+  nodRange: 20
+  dynJumpVars: {x: 0, y: 0}
+  startPos: {x: 0, y: 0}
+  startTime: 0
+  duration: 0
+  t: 0
+  movingRight: 1
+  moving: 0
+  stepVars: {x: 1, y: 0.5}
+  stepDuration: 0.5
+  leapVars: {x: 3, y: 1}
+  leapDuration: 1
+  jumpVars: {x: 0, y: 4}
+  jumpDuration: 2
+  fallVars: {x: 0, y: 5}
+  fallDuration: 1
+  currentMovement: 0
 --- !u!4 &2016061546
 Transform:
   m_ObjectHideFlags: 0

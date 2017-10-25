@@ -1,26 +1,45 @@
-﻿using System.Collections;
+﻿ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class Limb : MonoBehaviour {
+
+    public Vector2 pos {
+        get {
+            if (mesh && mesh.vertices.Length > 0) {
+                return mesh.vertices[0];
+            } else {
+                return Vector2.zero;
+            }
+        }
+        
+    }
+
     //Importing IGB283Tranform
     IGB283Transform meshTransform = new IGB283Transform();
 
     //Arm Sliders
     public GameObject child;
-	//public GameObject control;
+	public GameObject control;
 
     //Settable Start Vector3
     public Vector3 StartLocation;
 
     public Vector3 jointLocation;
 	public Vector3 jointOffset;
-
+    public Vector2 jointVert {
+        get { if (mesh && mesh.vertices.Length > 1) {
+                return mesh.vertices[1];
+            } else {
+                return Vector2.zero;
+            }
+        }
+    }
 
 	public float angle;
 
-	public float lastAngle;
+	//public float lastAngle;
 
 	public Vector3[] limbVertexLocations;
 
@@ -32,30 +51,72 @@ public class Limb : MonoBehaviour {
     public Mesh mesh;
 
     //Public colour choice
-    public float[] spriteColor;
-
-    //Public Colour Setting
-    new Vector3 DrawColor;
+    public Color spriteColour = Color.white;
 
     //Is head Check
     public bool isHead;
 
-    //Falldown variables.
-    public bool sleep;
-    public bool isUpperArm;
-    public bool isLowerArm;
-
-    [Header("Jump Variables")]
-    public float jumpHeight = 0.5f;
-    public float jumpWidth = 1;
-    public float jumpSpeed = 5;
-    Vector2 startPos;
-    Vector2 endPos;
-    float startTime;
-    public bool isJumping;
-    public bool moveRight = true;
+    //Is root Check
+    public bool isRoot;
+    
+    //Border variables
+    [Header("Border")]
     float minX = -4;
     float maxX = 4;
+
+    //Nod modifiers
+    [Header("Nod modifiers")]
+    public float nodSpeed = 1;
+    public float nodMedian = 35;
+    public float nodRange = 10;
+
+    //Dynamic jump variables
+    [Header("Dynamic jump variables")]
+    
+    //Positioning Vars
+    public Vector2 dynJumpVars;
+    public Vector2 startPos;
+
+    //Timing Vars
+    public float startTime;
+    public float duration;
+    public float t;
+
+    //Movement locks
+    public bool movingRight = true;
+    public bool moving;
+
+    //Step variables
+    [Header("Step variables")]
+    public Vector2 stepVars = new Vector2(1, 0.5f);
+    public float stepDuration = 0.5f;
+
+    //Leap variables
+    [Header("Leap variables")]
+    public Vector2 leapVars = new Vector2(3, 1);
+    public float leapDuration = 1;
+
+    //Jump variables
+    [Header("Jump variables")]
+    public Vector2 jumpVars = new Vector2(0, 4);
+    public float jumpDuration = 2;
+
+    //Fall variables
+    [Header("Fall variables")]
+    public Vector2 fallVars = new Vector2(0, 5);
+    public float fallDuration = 1;
+
+    //Move type variables
+    public enum Movement {
+        step,
+        leap,
+        jump,
+        fall
+    }
+
+    public Movement currentMovement;
+    float resetTimer;
+    float resetLength = 0.5f;
 
     //Methods//
 
@@ -72,7 +133,15 @@ public class Limb : MonoBehaviour {
         // Clear all vertex and index data from the mesh
         mesh.Clear();
 
+        List<Vector3> vertexList = new List<Vector3> {
+            Vector3.zero, jointLocation
+        };
 
+        vertexList.AddRange(limbVertexLocations);
+
+        mesh.vertices = vertexList.ToArray();
+
+        /*
         // Create a rectangle with supplied vertices
         mesh.vertices = new Vector3[] {
             limbVertexLocations[0],
@@ -80,77 +149,33 @@ public class Limb : MonoBehaviour {
             limbVertexLocations[2],
             limbVertexLocations[3]
         };
+        */
 
-        // Set the colour of the rectangle
-        mesh.colors = new Color[] {
-            new Color(spriteColor[0], spriteColor[1], spriteColor[2], spriteColor[3]),
-            new Color(spriteColor[0], spriteColor[1], spriteColor[2], spriteColor[3]),
-            new Color(spriteColor[0], spriteColor[1], spriteColor[2], spriteColor[3]),
-            new Color(spriteColor[0], spriteColor[1], spriteColor[2], spriteColor[3])
-        };
+        List<Color> colourList = new List<Color>();
+        for (int i = 0; i < mesh.vertices.Length; i++) {
+            colourList.Add(spriteColour);
+        }
+        mesh.colors = colourList.ToArray();
 
         // Set vertex indicies
-        mesh.triangles = new int[] { 0, 1, 2, 0, 2, 3 };
+        mesh.triangles = new int[] { 2, 3, 4, 2, 4, 5 };
     }
 
     // Move the joint to its starting position
-    public void MoveByOffset(Vector3 offset)
-    {
-        // Find the translation Matrix
-        Matrix3x3 T = Translate(offset);
-
-        // Move the mesh
-        Vector3[] vertices = mesh.vertices;
-
-        for (int i = 0; i < vertices.Length; i++)
-        {
-            vertices[i] = T.MultiplyPoint(vertices[i]);
-        }
-
-        mesh.vertices = vertices;
-
-        // Apply the transform to the joint
-        jointLocation = T.MultiplyPoint(jointLocation);
+    public void MoveByOffset(Vector3 offset) {
+        meshTransform.MoveByOffset(offset);
 
         // Apply the same operation to the children
-        if (child != null)
-        {
+        if (child != null) {
             child.GetComponent<Limb>().MoveByOffset(offset);
         }
 
     }
-    
+
     // Rotate the limb around a point
     public void RotateAroundPoint(Vector3 point, float angle, float lastAngle)
     {
-        // Move the point to the origin
-        Matrix3x3 T1 = Translate(-point);
-
-        // Undo the last rotation
-        Matrix3x3 R1 = Rotate(-lastAngle);
-
-        // Move the point back to the oritinal position
-        Matrix3x3 T2 = Translate(point);
-
-        // Perform the new rotation
-        Matrix3x3 R2 = Rotate(angle);
-
-        // The final translation matrix
-        Matrix3x3 M = T2 * R2 * R1 * T1;
-
-        // Move the mesh
-        Vector3[] vertices = mesh.vertices;
-
-        for (int i = 0; i < vertices.Length; i++)
-        {
-            vertices[i] = M.MultiplyPoint(vertices[i]);
-        }
-
-        mesh.vertices = vertices;
-
-
-        // Apply the transformation to the joint
-        jointLocation = M.MultiplyPoint(jointLocation);
+        meshTransform.RotateAroundPoint(point, angle, lastAngle);
 
         // Apply the transformation to the children
         if (child != null)
@@ -158,137 +183,100 @@ public class Limb : MonoBehaviour {
             child.GetComponent<Limb>().RotateAroundPoint(point, angle, lastAngle);
         }
 
-        //lastAngle = angle;
+        this.angle = angle;
     }
 
-    // Rotate a vertex around the origin
-    public static Matrix3x3 Rotate(float angle)
-    {
-        // Create a new matrix
-        Matrix3x3 matrix = new Matrix3x3();
-
-        // Set the rows of the matrix
-        matrix.SetRow(0, new Vector3(Mathf.Cos(angle), -Mathf.Sin(angle), 0.0f));
-        matrix.SetRow(1, new Vector3(Mathf.Sin(angle), Mathf.Cos(angle), 0.0f));
-        matrix.SetRow(2, new Vector3(0.0f, 0.0f, 1.0f));
-
-        // Return the matrix
-        return matrix;
-    }
-
-    // Translate the mesh
-    public static Matrix3x3 Translate(Vector3 offset)
-    {
-        // Create a new matrix
-        Matrix3x3 matrix = new Matrix3x3();
-
-        // Set the rows of the matrix
-        matrix.SetRow(0, new Vector3(1.0f, 0.0f, offset.x));
-        matrix.SetRow(1, new Vector3(0.0f, 1.0f, offset.y));
-        matrix.SetRow(2, new Vector3(0.0f, 0.0f, 1.0f));
-
-        // Return the matrix
-        return matrix;
-    }
 
     //HeadNod
     //Rotates the head + and - set degrees
     private void HeadNod()
     {
-        float nodRange = 0.04f;
-        float midAngle = 0.00f;
-        float nodSpeed = 5.00f;
-        float angle = midAngle + (Mathf.Sin(nodSpeed * Time.time) * nodRange);
+        float nodAngle = nodMedian + (Mathf.Sin(nodSpeed * Time.time) * nodRange);
 
-        RotateAroundPoint(jointLocation, angle, lastAngle);
+        RotateAroundPoint(jointVert, nodAngle, angle);
     }
 
-    //Sets jump targeting
-    void PrepareJump(bool right)
-    {
-        startPos = transform.position;
-        endPos = transform.position;
+    void UpdateJump() {
+        t = (Time.time - startTime) / duration;
+        t = Mathf.Clamp(t, 0, 1);
 
+        Vector2 newPos;
+
+        newPos.x = Mathf.Lerp(startPos.x, dynJumpVars.x, t);
+
+        newPos.y = startPos.y + (Mathf.Sin(Mathf.Clamp(t, 0, 1) * Mathf.PI) * dynJumpVars.y);
+
+        //meshTransform.SetPosition(newPos);
+        MoveByOffset(newPos - pos);
+
+        if (t >= 1) {
+            moving = false;
+        }
+    }
+
+    void SetupJump(Vector2 vars, float duration, float tOverride = 0) {
         startTime = Time.time;
-
-        if (right)
-        {
-            endPos.x += jumpWidth;
-        }
-        else
-        {
-            endPos.x -= jumpWidth;
+        if (tOverride != 0) {
+            tOverride = Mathf.Clamp(tOverride, 0, 1);
+            startTime -= tOverride * duration;
         }
 
-        if (endPos.x < minX || endPos.x > maxX) {
-            moveRight = !moveRight;
+        this.duration = duration;
+        dynJumpVars = vars;
+        dynJumpVars.x += pos.x;
+        startPos = pos;
+
+        moving = true;
+    }
+
+    void DoStep() {
+        Vector2 tempVar = stepVars;
+
+        //Direction correction
+        if (!movingRight) {
+            tempVar.x = -tempVar.x;
+        }
+        
+        //Auto-reverse
+        float endX = tempVar.x + pos.x;
+        if (endX < minX || endX > maxX) {
+            movingRight = !movingRight;
             return;
         }
 
-        isJumping = true;
+        SetupJump(tempVar, stepDuration);
     }
 
-    //Moves limb across the jump
-    void Jump()
-    {
-        float t = (Time.time - startTime) * jumpSpeed;
-        Vector2 pos;
+    void DoLeap() {
+        Vector2 tempVar = leapVars;
 
-        pos.x = Mathf.Lerp(startPos.x, endPos.x, t);
-
-        /*
-        if (t > 0.5f)
-        {
-            pos.y = Mathf.Lerp(jumpHeight, startPos.y, (t - 0.5f) * 2);
+        if (!movingRight) {
+            tempVar.x = -tempVar.x;
         }
-        else
-        {
-            pos.y = Mathf.Lerp(startPos.y, jumpHeight, t * 2);
+
+        float endX = tempVar.x + pos.x;
+        if (endX < minX) {
+            tempVar.x = minX - pos.x;
+        } else if (endX > maxX) {
+            tempVar.x = maxX - pos.x;
         }
-        //*/
 
-        pos.y = startPos.y + (Mathf.Sin(Mathf.Clamp(t, 0, 1) * Mathf.PI) * jumpHeight);
-
-        transform.position = pos;
-
-        if (t >= 1)
-        {
-            isJumping = false;
-        }
+        SetupJump(tempVar, leapDuration);
     }
 
+    void DoJump() {
+        SetupJump(jumpVars, jumpDuration);
+    }
 
-    //Falldown Script.
-
-    // Adjusts arm angles to set pos. Sets movement to 0. Removes player control
-
-    //Current, bool checks on Z
-    void FallDown()
-    {
-        if (sleep != true)
-        {
-            sleep = true;
-            if (isUpperArm == true) {
-                float nodRange = 0.04f;
-                float midAngle = 0.00f;
-                float nodSpeed = 5.00f;
-                float angle = midAngle + (Mathf.Sin(nodSpeed * Time.time) * nodRange);
-
-                RotateAroundPoint(jointLocation, angle, lastAngle);
-            }
-            Debug.Log(sleep);
-        } else if (sleep = true)
-        {
-            sleep = false;
-            Debug.Log(sleep);
-        }
+    void DoFall() {
+        SetupJump(fallVars, fallDuration * 2, 0.5f);
     }
 
     // This will run before Start
     void Awake () {
     	// Draw the limb 
     	DrawLimb();
-
+        meshTransform.Initialise(mesh);
         
     }
 
@@ -299,43 +287,58 @@ public class Limb : MonoBehaviour {
 			child.GetComponent<Limb>().MoveByOffset(jointOffset);
 		}
         //Set Starting angles
-        child.GetComponent<Limb>().RotateAroundPoint(jointLocation, startingAngle, lastAngle);
-
-     }
+        if (child != null) {
+            child.GetComponent<Limb>().RotateAroundPoint(jointVert, startingAngle, angle);
+            print("starting angle: " + startingAngle);
+            print("angle: " + angle);
+        }
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        /*
-		lastAngle = angle;
-		if (control != null) {
-			angle = control.GetComponent<Slider>().value;
-		}*/
-
-		if (child != null) {
-			child.GetComponent<Limb>().RotateAroundPoint(jointLocation, angle, lastAngle);
-		}	
 
         if (isHead == true)
         {
             HeadNod();
         }
 
-        if (Input.GetKey(KeyCode.RightArrow)) {
-            moveRight = true;
-        } else if (Input.GetKey(KeyCode.LeftArrow)) {
-            moveRight = false;
-        } else if (Input.GetKey(KeyCode.Z))
-        {
-            FallDown();
-        }
 
-        if (isJumping)
-        {
-            Jump();
-        }
-        else
-        {
-            PrepareJump(moveRight);
+
+        if (isRoot) {
+            //L/R inputs
+            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) {
+                movingRight = true;
+            } else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow)) {
+                movingRight = false;
+            }
+
+            //Movement logic
+            if (Input.GetKey(KeyCode.Z)) {
+                currentMovement = Movement.fall;
+                resetTimer = Time.time + resetLength;
+            } else if (Input.GetKey(KeyCode.W)) {
+                currentMovement = Movement.jump;
+                resetTimer = Time.time + resetLength;
+            } else if (Input.GetKey(KeyCode.S)) {
+                currentMovement = Movement.leap;
+                resetTimer = Time.time + resetLength;
+            } else if (Time.time > resetTimer) {
+                currentMovement = Movement.step;
+            }
+
+            if (moving) {
+                UpdateJump();
+            } else {
+                if (currentMovement == Movement.fall) {
+                    DoFall();
+                } else if (currentMovement == Movement.jump) {
+                    DoJump();
+                } else if (currentMovement == Movement.leap) {
+                    DoLeap();
+                } else {
+                    DoStep();
+                }
+            }
         }
 
         // Recalculate the bounds of the mesh
