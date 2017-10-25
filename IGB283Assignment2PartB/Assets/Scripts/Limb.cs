@@ -295,6 +295,9 @@ public class Limb : MonoBehaviour {
             moveRight = true;
         } else if (Input.GetKey(KeyCode.LeftArrow)) {
             moveRight = false;
+        } else if (Input.GetKey(KeyCode.RightArrow))
+        {
+            FallDown();
         }
 
         if (isJumping)
