@@ -251,7 +251,7 @@ MonoBehaviour:
   currentMovement: 0
   bobMedian: 10
   bobRange: 10
-  collapseMedian: 150
+  collapseMedian: 100
   collapseRange: 120
   collapseDuration: 0
   collapseOffset: 0.5
@@ -2022,8 +2022,8 @@ MonoBehaviour:
   currentMovement: 0
   bobMedian: 10
   bobRange: 10
-  collapseMedian: 20
-  collapseRange: 100
+  collapseMedian: 100
+  collapseRange: 120
   collapseDuration: 0
   collapseOffset: 0.5
   delay: 1
@@ -2960,8 +2960,8 @@ MonoBehaviour:
   currentMovement: 0
   bobMedian: 10
   bobRange: 10
-  collapseMedian: 20
-  collapseRange: 100
+  collapseMedian: 100
+  collapseRange: 120
   collapseDuration: 0
   collapseOffset: 0.5
   delay: 1
@@ -3220,8 +3220,8 @@ MonoBehaviour:
   currentMovement: 0
   bobMedian: 10
   bobRange: 10
-  collapseMedian: 20
-  collapseRange: 100
+  collapseMedian: 100
+  collapseRange: 120
   collapseDuration: 0
   collapseOffset: 0.5
   delay: 1
