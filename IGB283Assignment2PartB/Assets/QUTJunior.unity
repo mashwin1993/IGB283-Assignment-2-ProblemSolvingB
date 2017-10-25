@@ -251,10 +251,10 @@ MonoBehaviour:
   currentMovement: 0
   bobMedian: 10
   bobRange: 10
-  collapseMedian: 20
-  collapseRange: 100
+  collapseMedian: 150
+  collapseRange: 120
   collapseDuration: 0
-  collapseOffset: 0
+  collapseOffset: 0.5
   delay: 1
 --- !u!4 &83538472
 Transform:
@@ -654,8 +654,8 @@ MonoBehaviour:
   bobRange: 0
   collapseMedian: 0
   collapseRange: 0
-  collapseDuration: 0.5
-  collapseOffset: 0.05
+  collapseDuration: 4
+  collapseOffset: -3
   delay: 2
 --- !u!1 &249463314
 GameObject:
@@ -1385,8 +1385,8 @@ MonoBehaviour:
   bobRange: 0
   collapseMedian: 0
   collapseRange: 0
-  collapseDuration: 0.5
-  collapseOffset: 0.05
+  collapseDuration: 4
+  collapseOffset: -3
   delay: 2
 --- !u!1 &862042253
 GameObject:
@@ -1534,8 +1534,8 @@ MonoBehaviour:
   bobRange: 0
   collapseMedian: 0
   collapseRange: 0
-  collapseDuration: 0.5
-  collapseOffset: 0.05
+  collapseDuration: 4
+  collapseOffset: -3
   delay: 2
 --- !u!4 &875934793
 Transform:
@@ -1844,8 +1844,8 @@ MonoBehaviour:
   bobRange: 0
   collapseMedian: 0
   collapseRange: 0
-  collapseDuration: 0.5
-  collapseOffset: 0.05
+  collapseDuration: 4
+  collapseOffset: -3
   delay: 2
 --- !u!1 &1096688247
 GameObject:
@@ -2025,7 +2025,7 @@ MonoBehaviour:
   collapseMedian: 20
   collapseRange: 100
   collapseDuration: 0
-  collapseOffset: 0
+  collapseOffset: 0.5
   delay: 1
 --- !u!1 &1181045786
 GameObject:
@@ -2963,7 +2963,7 @@ MonoBehaviour:
   collapseMedian: 20
   collapseRange: 100
   collapseDuration: 0
-  collapseOffset: 0
+  collapseOffset: 0.5
   delay: 1
 --- !u!1 &1677844028
 GameObject:
@@ -3223,7 +3223,7 @@ MonoBehaviour:
   collapseMedian: 20
   collapseRange: 100
   collapseDuration: 0
-  collapseOffset: 0
+  collapseOffset: 0.5
   delay: 1
 --- !u!1 &1797413075
 GameObject:
