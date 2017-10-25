@@ -209,7 +209,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d6f9b35ca5d18742956a7eb5d23d7a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scale: {x: 1, y: 1}
+  scale: {x: 0.8, y: 0.8}
   child: {fileID: 1276527289}
   follower: {fileID: 0}
   StartLocation: {x: 0, y: 0, z: 0}
@@ -385,7 +385,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d6f9b35ca5d18742956a7eb5d23d7a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scale: {x: 0.5, y: 0.5}
+  scale: {x: 0.4, y: 0.4}
   child: {fileID: 1560176312}
   follower: {fileID: 0}
   StartLocation: {x: 0, y: 0, z: 0}
@@ -441,7 +441,7 @@ GameObject:
   m_Component:
   - component: {fileID: 191897653}
   m_Layer: 0
-  m_Name: Main Bot
+  m_Name: QUT Jr.
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -610,10 +610,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d6f9b35ca5d18742956a7eb5d23d7a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scale: {x: 0.5, y: 0.5}
+  scale: {x: 0.4, y: 0.4}
   child: {fileID: 1643966442}
   follower: {fileID: 1018540520}
-  StartLocation: {x: 0, y: -0.5, z: 0}
+  StartLocation: {x: 0, y: -0.6, z: 0}
   jointLocation: {x: 0, y: 0, z: 1}
   jointOffset: {x: 0, y: 0, z: 0}
   angle: 0
@@ -627,7 +627,7 @@ MonoBehaviour:
   mesh: {fileID: 0}
   spriteColour: {r: 1, g: 1, b: 1, a: 1}
   isHead: 0
-  isRoot: 0
+  isRoot: 1
   isFollower: 1
   nodSpeed: 1
   nodMedian: 35
@@ -641,13 +641,13 @@ MonoBehaviour:
   wasMovingRight: 1
   moving: 0
   collapsing: 0
-  stepVars: {x: 1, y: 0.5}
+  stepVars: {x: 1, y: 0.25}
   stepDuration: 0.5
-  leapVars: {x: 3, y: 1}
+  leapVars: {x: 3, y: 0.6}
   leapDuration: 1
-  jumpVars: {x: 0, y: 4}
+  jumpVars: {x: 0, y: 1.8}
   jumpDuration: 2
-  fallVars: {x: 0, y: 5}
+  fallVars: {x: 0, y: 1.8}
   fallDuration: 1
   currentMovement: 0
   bobMedian: 0
@@ -1101,7 +1101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d6f9b35ca5d18742956a7eb5d23d7a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scale: {x: 0.5, y: 0.5}
+  scale: {x: 0.3, y: 0.3}
   child: {fileID: 0}
   follower: {fileID: 0}
   StartLocation: {x: 0, y: 0, z: 0}
@@ -1358,7 +1358,7 @@ MonoBehaviour:
   mesh: {fileID: 0}
   spriteColour: {r: 1, g: 1, b: 1, a: 1}
   isHead: 0
-  isRoot: 0
+  isRoot: 1
   isFollower: 1
   nodSpeed: 1
   nodMedian: 35
@@ -1372,13 +1372,13 @@ MonoBehaviour:
   wasMovingRight: 1
   moving: 0
   collapsing: 0
-  stepVars: {x: 1, y: 0.5}
+  stepVars: {x: 1, y: 0.3}
   stepDuration: 0.5
-  leapVars: {x: 3, y: 1}
+  leapVars: {x: 3, y: 0.7}
   leapDuration: 1
-  jumpVars: {x: 0, y: 4}
+  jumpVars: {x: 0, y: 2}
   jumpDuration: 2
-  fallVars: {x: 0, y: 5}
+  fallVars: {x: 0, y: 2}
   fallDuration: 1
   currentMovement: 0
   bobMedian: 0
@@ -1490,10 +1490,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d6f9b35ca5d18742956a7eb5d23d7a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scale: {x: 1, y: 1}
+  scale: {x: 0.8, y: 0.8}
   child: {fileID: 83538470}
   follower: {fileID: 843500810}
-  StartLocation: {x: 0, y: 0, z: 0}
+  StartLocation: {x: 0, y: -0.2, z: 0}
   jointLocation: {x: 0, y: 0, z: 1}
   jointOffset: {x: 0, y: 0, z: 0}
   angle: 0
@@ -1525,9 +1525,9 @@ MonoBehaviour:
   stepDuration: 0.5
   leapVars: {x: 3, y: 1}
   leapDuration: 1
-  jumpVars: {x: 0, y: 4}
+  jumpVars: {x: 0, y: 3}
   jumpDuration: 2
-  fallVars: {x: 0, y: 5}
+  fallVars: {x: 0, y: 3}
   fallDuration: 1
   currentMovement: 0
   bobMedian: 0
@@ -1800,10 +1800,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d6f9b35ca5d18742956a7eb5d23d7a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scale: {x: 0.5, y: 0.5}
+  scale: {x: 0.3, y: 0.3}
   child: {fileID: 1160285534}
   follower: {fileID: 0}
-  StartLocation: {x: 0, y: -0.5, z: 0}
+  StartLocation: {x: 0, y: -0.7, z: 0}
   jointLocation: {x: 0, y: 0, z: 1}
   jointOffset: {x: 0, y: 0, z: 0}
   angle: 0
@@ -1817,7 +1817,7 @@ MonoBehaviour:
   mesh: {fileID: 0}
   spriteColour: {r: 1, g: 1, b: 1, a: 1}
   isHead: 0
-  isRoot: 0
+  isRoot: 1
   isFollower: 1
   nodSpeed: 1
   nodMedian: 35
@@ -1831,13 +1831,13 @@ MonoBehaviour:
   wasMovingRight: 1
   moving: 0
   collapsing: 0
-  stepVars: {x: 1, y: 0.5}
+  stepVars: {x: 1, y: 0.2}
   stepDuration: 0.5
-  leapVars: {x: 3, y: 1}
+  leapVars: {x: 3, y: 0.5}
   leapDuration: 1
-  jumpVars: {x: 0, y: 4}
+  jumpVars: {x: 0, y: 1.6}
   jumpDuration: 2
-  fallVars: {x: 0, y: 5}
+  fallVars: {x: 0, y: 1.6}
   fallDuration: 1
   currentMovement: 0
   bobMedian: 0
@@ -1980,7 +1980,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d6f9b35ca5d18742956a7eb5d23d7a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scale: {x: 0.5, y: 0.5}
+  scale: {x: 0.3, y: 0.3}
   child: {fileID: 1426476629}
   follower: {fileID: 0}
   StartLocation: {x: 0, y: 0, z: 0}
@@ -2134,7 +2134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d6f9b35ca5d18742956a7eb5d23d7a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scale: {x: 1, y: 1}
+  scale: {x: 0.8, y: 0.8}
   child: {fileID: 2016061544}
   follower: {fileID: 0}
   StartLocation: {x: 0, y: 0, z: 0}
@@ -2364,7 +2364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d6f9b35ca5d18742956a7eb5d23d7a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scale: {x: 0.5, y: 0.5}
+  scale: {x: 0.3, y: 0.3}
   child: {fileID: 634639748}
   follower: {fileID: 0}
   StartLocation: {x: 0, y: 0, z: 0}
@@ -2618,7 +2618,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1524028926}
   m_Layer: 0
-  m_Name: Bot 2
+  m_Name: QUT Jr. Jr. Jr.
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2684,7 +2684,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d6f9b35ca5d18742956a7eb5d23d7a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scale: {x: 0.5, y: 0.5}
+  scale: {x: 0.4, y: 0.4}
   child: {fileID: 0}
   follower: {fileID: 0}
   StartLocation: {x: 0, y: 0, z: 0}
@@ -2918,7 +2918,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d6f9b35ca5d18742956a7eb5d23d7a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scale: {x: 0.5, y: 0.5}
+  scale: {x: 0.4, y: 0.4}
   child: {fileID: 188866153}
   follower: {fileID: 0}
   StartLocation: {x: 0, y: 0, z: 0}
@@ -3234,7 +3234,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1797413076}
   m_Layer: 0
-  m_Name: Bot 3
+  m_Name: QUT Jr. Jr. Jr. Jr.
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3338,7 +3338,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1977988869}
   m_Layer: 0
-  m_Name: Bot 1
+  m_Name: QUT Jr. Jr.
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3390,7 +3390,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d6f9b35ca5d18742956a7eb5d23d7a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scale: {x: 1, y: 1}
+  scale: {x: 0.8, y: 0.8}
   child: {fileID: 0}
   follower: {fileID: 0}
   StartLocation: {x: 0, y: 0, z: 0}

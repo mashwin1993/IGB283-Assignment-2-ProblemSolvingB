@@ -356,7 +356,7 @@ public class Limb : MonoBehaviour {
 
 
 
-        if (isRoot) {
+        if (isRoot && !isFollower) {
             //L/R inputs
             if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow)) {
                 movingRight = true;
