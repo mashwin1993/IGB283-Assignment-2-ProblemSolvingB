@@ -2,6 +2,7 @@
 using UnityEngine;
 
 public class Limb : MonoBehaviour {
+    public Vector2 scale = Vector2.one;
 
     public Vector2 pos {
         get {
@@ -19,7 +20,7 @@ public class Limb : MonoBehaviour {
 
     //Arm Sliders
     public GameObject child;
-	public GameObject control;
+    public GameObject follower;
 
     //Settable Start Vector3
     public Vector3 StartLocation;
@@ -56,7 +57,10 @@ public class Limb : MonoBehaviour {
 
     //Is root Check
     public bool isRoot;
-    
+
+    //Is follower Check
+    public bool isFollower;
+
     //Border variables
     [Header("Border")]
     float minX = -4;
@@ -82,8 +86,17 @@ public class Limb : MonoBehaviour {
 
     //Movement locks
     public bool movingRight = true;
+    public bool wasMovingRight = true;
     public bool moving;
     public bool collapsing;
+
+    int rightModifier {
+        get { if (wasMovingRight) {
+                return 1;
+            } else {
+                return -1;
+            } }
+    }
 
     //Step variables
     [Header("Step variables")]
@@ -128,6 +141,11 @@ public class Limb : MonoBehaviour {
     public float collapseRange;
     public float collapseDuration;
     public float collapseOffset;
+
+    [Header("Follower Vars")]
+    public List<KeyValuePair<Movement, bool>> recieveQueue = new List<KeyValuePair<Movement, bool>>();
+    public List<KeyValuePair<Movement, bool>> sendQueue = new List<KeyValuePair<Movement, bool>>();
+    public int delay = 1;
 
     //Methods//
 
@@ -176,6 +194,7 @@ public class Limb : MonoBehaviour {
     // Rotate the limb around a point
     public void RotateAroundPoint(Vector3 point, float angle, float lastAngle)
     {
+        angle *= rightModifier;
         meshTransform.RotateAroundPoint(point, angle, lastAngle);
 
         // Apply the transformation to the children
@@ -196,6 +215,19 @@ public class Limb : MonoBehaviour {
         float nodAngle = nodMedian + (Mathf.Sin(nodSpeed * Time.time) * nodRange);
 
         RotateAroundPoint(jointVert, nodAngle, angle);
+    }
+
+    public void MoveTo(Vector2 location) {
+        meshTransform.Translate(location - pos);
+    }
+
+    public void Reverse(Vector2 location) {
+        meshTransform.ScaleUnrestricted(new Vector2(-1, 1));
+        MoveTo(location);
+
+        if (child) {
+            child.GetComponent<Limb>().Reverse(jointVert);
+        }
     }
 
     void UpdateJump() {
@@ -219,6 +251,12 @@ public class Limb : MonoBehaviour {
     }
 
     void SetupJump(Vector2 vars, float duration, float tOverride = 0) {
+        if (movingRight != wasMovingRight) {
+            Reverse(pos);
+
+            wasMovingRight = movingRight;
+        }
+
         startTime = Time.time;
         if (tOverride != 0) {
             tOverride = Mathf.Clamp(tOverride, 0, 1);
@@ -249,6 +287,7 @@ public class Limb : MonoBehaviour {
         }
 
         SetupJump(tempVar, stepDuration);
+        sendQueue.Add(new KeyValuePair<Movement, bool>(Movement.step, movingRight));
     }
 
     void DoLeap() {
@@ -266,15 +305,18 @@ public class Limb : MonoBehaviour {
         }
 
         SetupJump(tempVar, leapDuration);
+        sendQueue.Add(new KeyValuePair<Movement, bool>(Movement.leap, movingRight));
     }
 
     void DoJump() {
         SetupJump(jumpVars, jumpDuration);
+        sendQueue.Add(new KeyValuePair<Movement, bool>(Movement.jump, movingRight));
     }
 
     void DoFall() {
         SetupJump(fallVars, fallDuration * 2, 0.5f);
         collapsing = true;
+        sendQueue.Add(new KeyValuePair<Movement, bool>(Movement.fall, movingRight));
     }
 
     // This will run before Start
@@ -282,18 +324,25 @@ public class Limb : MonoBehaviour {
     	// Draw the limb 
     	DrawLimb();
         meshTransform.Initialise(mesh);
-        
+        meshTransform.Scale(scale);
+        MoveTo(StartLocation);
     }
 
 	// Use this for initialization
 	void Start () {
-		// Move the child to the joint location
-		if (child != null) {
-			child.GetComponent<Limb>().MoveByOffset(jointOffset);
-		}
-        //Set Starting angles
+        MoveExtension();
+
+        //Set Starting angles - redundant
         if (child != null) {
             child.GetComponent<Limb>().RotateAroundPoint(jointVert, startingAngle, angle);
+        }
+    }
+
+    public void MoveExtension() {
+        // Move the child to the joint location
+        if (child != null) {
+            child.GetComponent<Limb>().MoveTo(jointVert);
+            child.GetComponent<Limb>().MoveExtension();
         }
     }
 	
@@ -348,11 +397,43 @@ public class Limb : MonoBehaviour {
                     DoStep();
                 }
             }
+        } else if (isFollower) {
+            if (moving) {
+                UpdateJump();
+            } else if (collapsing) {
+                if (t >= 1) {
+                    SetCollapse();
+                } else {
+                    UpdateCollapse(t);
+                }
+            } else if (recieveQueue.Count > 0) {
+                movingRight = recieveQueue[0].Value;
+
+                Movement choice = recieveQueue[0].Key;
+                if (choice == Movement.step) {
+                    DoStep();
+                } else if (choice == Movement.leap) {
+                    DoLeap();
+                } else if (choice == Movement.jump) {
+                    DoJump();
+                } else if (choice == Movement.fall) {
+                    DoFall();
+                }
+
+                recieveQueue.RemoveAt(0);
+            }
         }
 
         // Recalculate the bounds of the mesh
         mesh.RecalculateBounds();
-	}
+
+        if (sendQueue.Count > delay) {
+            if (follower) {
+                follower.GetComponent<Limb>().recieveQueue.Add(sendQueue[0]);
+                sendQueue.RemoveAt(0);
+            }
+        }
+    }
 
     void SetCollapse() {
         startTime = Time.time - (duration * collapseOffset);
