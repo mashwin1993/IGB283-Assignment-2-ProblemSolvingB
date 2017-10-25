@@ -9,7 +9,7 @@ public class Limb : MonoBehaviour {
 
     //Arm Sliders
     public GameObject child;
-	public GameObject control;
+	//public GameObject control;
 
     //Settable Start Vector3
     public Vector3 StartLocation;
@@ -39,6 +39,11 @@ public class Limb : MonoBehaviour {
 
     //Is head Check
     public bool isHead;
+
+    //Falldown variables.
+    public bool sleep;
+    public bool isUpperArm;
+    public bool isLowerArm;
 
     [Header("Jump Variables")]
     public float jumpHeight = 0.5f;
@@ -190,13 +195,12 @@ public class Limb : MonoBehaviour {
     //Rotates the head + and - set degrees
     private void HeadNod()
     {
-        float nodRange = 0.05f;
+        float nodRange = 0.04f;
         float midAngle = 0.00f;
         float nodSpeed = 5.00f;
         float angle = midAngle + (Mathf.Sin(nodSpeed * Time.time) * nodRange);
 
         RotateAroundPoint(jointLocation, angle, lastAngle);
-        Debug.Log(angle);
     }
 
     //Sets jump targeting
@@ -253,6 +257,33 @@ public class Limb : MonoBehaviour {
         }
     }
 
+
+    //Falldown Script.
+
+    // Adjusts arm angles to set pos. Sets movement to 0. Removes player control
+
+    //Current, bool checks on Z
+    void FallDown()
+    {
+        if (sleep != true)
+        {
+            sleep = true;
+            if (isUpperArm == true) {
+                float nodRange = 0.04f;
+                float midAngle = 0.00f;
+                float nodSpeed = 5.00f;
+                float angle = midAngle + (Mathf.Sin(nodSpeed * Time.time) * nodRange);
+
+                RotateAroundPoint(jointLocation, angle, lastAngle);
+            }
+            Debug.Log(sleep);
+        } else if (sleep = true)
+        {
+            sleep = false;
+            Debug.Log(sleep);
+        }
+    }
+
     // This will run before Start
     void Awake () {
     	// Draw the limb 
@@ -270,9 +301,7 @@ public class Limb : MonoBehaviour {
         //Set Starting angles
         child.GetComponent<Limb>().RotateAroundPoint(jointLocation, startingAngle, lastAngle);
 
-
-
-    }
+     }
 	
 	// Update is called once per frame
 	void Update () {
@@ -295,7 +324,7 @@ public class Limb : MonoBehaviour {
             moveRight = true;
         } else if (Input.GetKey(KeyCode.LeftArrow)) {
             moveRight = false;
-        } else if (Input.GetKey(KeyCode.RightArrow))
+        } else if (Input.GetKey(KeyCode.Z))
         {
             FallDown();
         }
